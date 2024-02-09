@@ -1,11 +1,23 @@
 <script lang="ts">
-    import type { PageData } from './$types';
+	import { Heading } from 'flowbite-svelte';
+	import type { PageData } from './$types';
 
-    export let data: PageData;
+	export let data: PageData;
 
-    console.log({data});
+	console.log({ data });
 </script>
 
-{ data.word }
+<Heading tag="h2">Results for "{data.word}"</Heading>
 
-<br />
+<hr class="my-4" />
+
+<ul>
+	{#each data.res as sticker}
+		<li>
+			<a href={sticker.iconUrl}>
+				<img src={sticker.iconUrl} alt={sticker.name} />
+				{sticker.name}
+			</a>
+		</li>
+	{/each}
+</ul>
