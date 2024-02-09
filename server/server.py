@@ -13,7 +13,7 @@ with open('data/stickerAll.json', 'r') as f:
 @app.route('/suggest/<word>', methods=['GET'])
 def get_todos(word):
   print(f'GET /suggest/{word}')
-  return list(filter(lambda s: word in s['letters'].lower(), data))[:5]
+  return [list(filter(lambda s: word in s['letters'].lower(), data))[:5]]
 
 if __name__ == '__main__':
     app.run(debug=True)
