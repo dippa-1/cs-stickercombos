@@ -11,14 +11,19 @@
 
 <hr class="my-4" />
 
-<ul class="flex">
-    {#each data.res as sticker}
-        <li>
-            <a href={sticker.iconUrl} class="group" target="_blank">
-                <img src={sticker.iconUrl} alt={sticker.name} class="transition-transform duration-300 group-hover:scale-125" />
-                <Span class="text-sm text-gray-500 group-hover:text-black transition-all">{sticker.name}</Span>
-            </a>
-        </li>
-    {/each}
+<ul class="flex justify-center">
+	{#each data.res as sticker}
+		<a href={sticker.iconUrl} class="group" target="_blank">
+			<li>
+				<img
+					src={sticker.iconUrl}
+					alt={sticker.name}
+					class="mx-auto transition-transform duration-300 group-hover:scale-125"
+				/>
+				<Span class="text-sm text-gray-500 transition-all group-hover:text-black"
+					>{sticker.name}</Span
+				>
+			</li>
+		</a>
+	{/each}
 </ul>
-
