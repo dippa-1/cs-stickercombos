@@ -1,53 +1,26 @@
 <script>
-	import Header from './Header.svelte';
-	import './styles.css';
+	import { goto } from '$app/navigation';
+	import '../app.pcss';
+
+	import { Input, Button, Heading } from 'flowbite-svelte';
+
+	let word = '';
+
+	const submit = () => {
+		goto(`/suggest/${word}`)
+	}
 </script>
 
-<div class="app">
-	<Header />
+<div class="mx-auto p-8 text-center md:p-16">
+	<Heading tag="h1">Suggest stickers for a word</Heading>
+	<form
+		class="mx-auto mb-32 mt-16 flex space-x-2 md:w-2/3 xl:w-1/3"
+		on:submit|preventDefault={submit}
+	>
+		<Input bind:value={word} size="lg" type="text" name="word" placeholder="Enter word" required />
+		<div class="my-4"></div>
+		<Button type="submit" size="xl">Convert</Button>
+	</form>
 
-	<main>
-		<slot />
-	</main>
-
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+	<slot />
 </div>
-
-<style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
-
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
-</style>
