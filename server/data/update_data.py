@@ -9,7 +9,7 @@ with open('cs2allItems.json', 'r', encoding='UTF-8') as file:
     stickerItem['name'] = item['name']
     stickerItem['iconUrl'] = item['image']
     stickerItem['rarity'] = item['name'].split()[-1] if ('(' and ')') in item['name'].split()[-1] else 'Paper'
-    stickerItem['letters'] = [char for char in item['name'].split('| ')[1].split('(')[0] if not char == ' ']
+    stickerItem['letters'] = item['name'].split('| ')[1].split('(')[0].replace(' ', '')
     stickerList.append(stickerItem)
 
 with open('stickerAll.json', 'w', encoding='UTF-8') as outFile:
