@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Heading } from 'flowbite-svelte';
+	import { Heading, Span } from 'flowbite-svelte';
 	import type { PageData } from './$types';
 
 	export let data: PageData;
@@ -11,13 +11,14 @@
 
 <hr class="my-4" />
 
-<ul>
-	{#each data.res as sticker}
-		<li>
-			<a href={sticker.iconUrl}>
-				<img src={sticker.iconUrl} alt={sticker.name} />
-				{sticker.name}
-			</a>
-		</li>
-	{/each}
+<ul class="flex">
+    {#each data.res as sticker}
+        <li>
+            <a href={sticker.iconUrl} class="group" target="_blank">
+                <img src={sticker.iconUrl} alt={sticker.name} class="transition-transform duration-300 group-hover:scale-125" />
+                <Span class="text-sm text-gray-500 group-hover:text-black transition-all">{sticker.name}</Span>
+            </a>
+        </li>
+    {/each}
 </ul>
+
