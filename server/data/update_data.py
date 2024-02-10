@@ -35,7 +35,7 @@ with open('cs2allItems.json', 'r', encoding='UTF-8') as file:
       stickerItem['rarity_color'] = item['rarity']['color']
 
     stickerItem['text'] = []
-    stickerItem['text'].append(dict(letters = item['name'].split('| ')[1].split('(')[0].replace(' ', ''), rotation = 0))
+    stickerItem['text'].append(dict(letters = item['name'].split('| ')[1].split('(')[0], rotation = 0))
 
     stickerList.append(stickerItem)
 
