@@ -6,7 +6,8 @@ import json
 import threading
 from flask import request
 import os
-from algo import find_combinations
+from algo import create_starts_with_index, find_combinations
+import numpy as np
 
 app = Flask(__name__)
 CORS(app)
@@ -25,15 +26,59 @@ unlabeled_data = list(filter(lambda s: 'name' not in s or s['name'] not in [stic
 sticker_iterator = iter(unlabeled_data)
 sticker_semaphore = threading.Semaphore()
 
+index = {}
+with open('index.json', 'r') as f:
+  index = json.load(f)
+
+def find_deepest_arrays(arr, result=None):
+    """
+    Recursively find the deepest arrays in a given numpy array and collect them.
+
+    Parameters:
+    - arr: numpy array of arbitrary dimensionality.
+    - result: list to collect the deepest arrays. Should be None when called by user.
+
+    Returns:
+    - A list of the deepest arrays.
+    """
+    if result is None:
+        result = []
+
+    # Check if the array is of the lowest dimension (i.e., no more nested arrays)
+    if arr.ndim == 1:
+        result.append(arr)
+    else:
+        # Iterate through each item in the array and dive deeper
+        for sub_arr in arr:
+            find_deepest_arrays(sub_arr, result)
+
+    return result
+
+stickers_dict = {}
+for sticker in all_stickers:
+  stickers_dict[sticker['name']] = sticker
+
 @app.route('/suggest/<word>', methods=['GET'])
 def get_suggestion(word):
   print(f'GET /suggest/{word}')
-  arr_3d = find_combinations(word.replace(' ', ''), all_stickers)
-  arr_2d = []
-  for sub_array in arr_3d:
-    for inner_array in sub_array:
-      arr_2d.append(inner_array)
-  return arr_2d
+  word = word.lower().replace(' ', '')
+  result = find_combinations(word, index)
+  arr = np.array(result)
+
+  # with open('res.json', 'w') as f3:
+  #   json.dump(result, f3, indent=2)
+
+  deepest = np.array(find_deepest_arrays(arr))
+  # with open('res-np.json', 'w') as f3:
+  #   json.dump(deepest.tolist(), f3, indent=2)
+    
+  randoms = np.random.choice(len(deepest), 20)
+  stickers = [list(map(lambda s: stickers_dict[s], deepest[i])) for i in randoms]
+  
+  # with open('res-final.json', 'w') as f3:
+  #   json.dump(stickers, f3, indent=2)
+
+  return stickers
 
 @app.route('/label/next', methods=['GET'])
 def get_next_label():
