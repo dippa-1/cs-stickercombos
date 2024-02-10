@@ -27,7 +27,7 @@
 	<Input bind:value={label} size="lg" type="text" name="label" placeholder="Enter characters" required />
 	<div class="my-4"></div>
 	<Button type="submit" size="xl"><div>Finish↩</div></Button>
-	<Button href='/label' type="button" size="xl">Skip</Button>
+	<Button href='/label/next' type="button" size="xl">Skip</Button>
 </form>
 
 
