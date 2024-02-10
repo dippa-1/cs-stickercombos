@@ -1,62 +1,32 @@
 import json
 
-counter = 0
 
-def find_combinations(word, stickerList, stickerId, prefix='', depth=0):
-    global counter # Zugriff auf die globale Variable
-
-    # Basisfall: Wenn das Präfix das gegebene Wort ergibt, geben Sie es aus
+def find_combinations(word, stickerList, stickerId=[], depth=0):
     if word == '':
-        counter += 1
-        #print('{}: {}'.format(counter, stickerId))
-        return
+        return stickerId
     
-    # Basisfall: Wenn die maximale Tiefe erreicht ist, stoppen Sie die Rekursion
     if depth == 5:
         return
     
-    # Durchlaufen Sie die Liste der Sticker
     for sticker in stickerList:
         # Extrahieren Sie die Buchstaben aus jedem Sticker-Text
         words = [x['letters'] for x in sticker['text']]
 
         # Durchlaufen Sie die extrahierten Buchstaben für jeden Sticker
         for text in words:
+            text = text.lower().replace(' ', '')
 
-            # Präfix + aktueller Sticker-Text
-            new_prefix = prefix + text
-            
-            if word.lower().startswith(new_prefix.lower()):
-                i = 0
-                
-                for x in new_prefix.lower():
-                    if x == word[i]:
-                        i += 1
-                    else:
-                        break
-                
-                word = word[i:]
-                stickerId.append(sticker['name'])
-                return find_combinations(word, stickerList, stickerId, '', depth + 1)
-                
-            
-            elif word.lower() in new_prefix.lower():
-                i = 0
-                
-                for x in new_prefix.lower():
-                    if i < len(word) and x == word[i]:
-                        i += 1
-                    else:
-                        break
-                
-                word = word[i:]
-                stickerId.append(sticker['name'])
-                return find_combinations(word, stickerList, stickerId, new_prefix, depth + 1)
+            for i in range(len(text), 1, -1):
+                if word.startswith(text[:i]):
+                    new_word = word.replace(text[:i], '', 1)
+                    stickerId.append(sticker)
+                    find_combinations(new_word, stickerList, stickerId, depth + 1)
+        
 
 # Beispielaufruf
 with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
   stickerList = json.loads(f.read())
-  word = "big dick".replace(' ', '')
+  word = "big dick"
   stickerId = []
-  find_combinations(word, stickerList, stickerId)
-  print(stickerId)
+  result = [find_combinations(word.lower().replace(' ', ''), stickerList)]
+  print(result)
