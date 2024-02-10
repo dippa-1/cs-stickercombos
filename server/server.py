@@ -16,8 +16,6 @@ sticker_iterator = iter(all_stickers)
 sticker_semaphore = threading.Semaphore()
 
 def find_combinations(word, stickerList, stickerId, prefix='', depth=0):
-    global counter # Zugriff auf die globale Variable
-
     # Basisfall: Wenn das Präfix das gegebene Wort ergibt, geben Sie es aus
     if word == '':
         counter += 1
