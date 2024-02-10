@@ -22,6 +22,6 @@ export const load: PageLoad = async ({ url }) => {
 
   return {
     word,
-    stickers: [stickers],
+    stickers: stickers,
   };
 };

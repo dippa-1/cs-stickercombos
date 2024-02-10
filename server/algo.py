@@ -32,12 +32,13 @@ def find_combinations(word, stickerList, depth=0, used_stickers=None):
         return None
 
 # Beispielaufruf
-with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
-    stickerList = json.loads(f.read())
-    word = "big dick"
-    result = find_combinations(word.lower().replace(' ', ''), stickerList)
-    if result:
-        for combination in result:
-            print(combination)
-    else:
-        print("Keine passenden Kombinationen gefunden.")
+if __name__ == '__main__':
+    with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
+        stickerList = json.loads(f.read())
+        word = "big dick"
+        result = find_combinations(word.lower().replace(' ', ''), stickerList)
+        if result:
+            for combination in result:
+                print(combination)
+        else:
+            print("Keine passenden Kombinationen gefunden.")
