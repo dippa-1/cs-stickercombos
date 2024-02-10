@@ -25,6 +25,10 @@
 		// only if the last field is not empty
 		if (labels[labels.length - 1] !== '') labels = [...labels, ''];
 	}
+
+	function removeTextField() {
+		if (labels.length > 1) labels = labels.slice(0, -1);
+	}
 </script>
 
 <Heading tag="h1">Label these stickers</Heading>
@@ -41,7 +45,10 @@
 				maxLength="30"
 			/>
 		{/each}
-		<Button type="button" on:click={addTextField} size="lg">Add text field</Button>
+		<div class="grid grid-cols-2 space-x-2">
+			<Button type="button" on:click={addTextField} size="lg">Add text field</Button>
+			<Button color="red" type="button" on:click={removeTextField} size="lg">Remove last</Button>
+		</div>
 	</div>
 	<div class="flex space-x-2">
 		<div>

@@ -1,8 +1,6 @@
 import { error, redirect } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
-export const csr = true;
-
 export const load: PageLoad = async ({}) => {
   const sticker: {
     name: string,

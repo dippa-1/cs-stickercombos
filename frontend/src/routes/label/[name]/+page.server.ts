@@ -1,5 +1,5 @@
 import { error, redirect } from '@sveltejs/kit';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
 export const actions = {
     default: async ({ request, params }) => {
         const data = await request.formData();
@@ -27,3 +27,26 @@ export const actions = {
         redirect(301, `/label`)
     },
 } satisfies Actions;
+
+export const load: PageServerLoad = async ({ params }) => {
+  if (!params.name?.length) {
+    error(404, 'No labels provided')
+  }
+
+  const sticker: {
+    name: string,
+    iconUrl: string,
+    trait: string,
+    rarity: string,
+    rarity_color: string,
+    text: {
+      letters: string,
+      rotation: number,
+    }[],
+  } | null = await fetch(`http://localhost:5000/label/${params.name}`).then(res => res.json()).catch(e => error(500, e));
+  console.log('Got labeling sticker', sticker);
+
+  return {
+    sticker,
+  };
+};
