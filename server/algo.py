@@ -8,7 +8,7 @@ def find_combinations(word, stickerList, stickerId, prefix='', depth=0):
     # Basisfall: Wenn das Präfix das gegebene Wort ergibt, geben Sie es aus
     if word == '':
         counter += 1
-        print('{}: {}'.format(counter, stickerId))
+        #print('{}: {}'.format(counter, stickerId))
         return
     
     # Basisfall: Wenn die maximale Tiefe erreicht ist, stoppen Sie die Rekursion
@@ -59,3 +59,4 @@ with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
   word = "big dick".replace(' ', '')
   stickerId = []
   find_combinations(word, stickerList, stickerId)
+  print(stickerId)
