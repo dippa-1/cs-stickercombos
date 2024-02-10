@@ -1,10 +1,10 @@
-import { error } from '@sveltejs/kit';
 import type { PageLoad } from './$types';
 
 export const load: PageLoad = async ({ url }) => {
   const word = url.searchParams.get('word')?.toLowerCase();
   if (!word?.length) {
-    return error(400, 'No word provided.')
+    console.error('no word provided');
+    return {}
   }
 
   const res: {
