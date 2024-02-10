@@ -18,7 +18,7 @@ def find_combinations(word, stickerList, depth=0, used_stickers=None):
         for text in words:
             text = text.lower().replace(' ', '')
 
-            for i in range(len(text), 1, -1):
+            for i in range(len(text), 0, -1):
                 if word.startswith(text[:i]):
                     new_word = word.replace(text[:i], '', 1)
                     new_used_stickers = used_stickers + [sticker]
