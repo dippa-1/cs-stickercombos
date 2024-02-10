@@ -28,7 +28,7 @@ sticker_semaphore = threading.Semaphore()
 @app.route('/suggest/<word>', methods=['GET'])
 def get_suggestion(word):
   print(f'GET /suggest/{word}')
-  arr_3d = find_combinations(word, all_stickers)
+  arr_3d = find_combinations(word.replace(' ', ''), all_stickers)
   arr_2d = []
   for sub_array in arr_3d:
     for inner_array in sub_array:
