@@ -5,7 +5,7 @@ export const load: PageLoad = async ({}) => {
   const sticker: {
     name: string,
     iconUrl: string,
-  } | null = await fetch(`http://localhost:5000/label/next`).then(res => res.json()).catch(e => error(500, e));
+  } | null = await fetch(`http://localhost:8000/label/next`).then(res => res.json()).catch(e => error(500, e));
 
   if (sticker) {
     console.log('Redirecting to', sticker.name);

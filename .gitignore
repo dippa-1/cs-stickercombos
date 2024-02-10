@@ -3,3 +3,6 @@ liste/test.py
 server/data/.env
 
 frontend/.vercel/output
+server/.venv
+server/__pycache__
+server/res.json
