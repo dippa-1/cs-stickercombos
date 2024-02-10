@@ -7,16 +7,21 @@ export const load: PageLoad = async ({ url }) => {
     return {}
   }
 
-  const res: {
+  const stickers: {
     name: string,
     iconUrl: string,
+    trait: string,
     rarity: string,
-    letters: string,
+    rarity_color: string,
+    text: {
+      letters: string,
+      rotation: number,
+    }[],
   }[][] = await fetch(`http://localhost:5000/suggest/${word}`).then(res => res.json());
-  console.log(res);
+  console.log(stickers);
 
   return {
     word,
-    res,
+    stickers: [stickers],
   };
 };
