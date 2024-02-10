@@ -16,10 +16,10 @@
 	<Button type="submit" size="xl">Suggest</Button>
 </form>
 
-{#if !!data.word?.length && data.res}
+{#if !!data.word?.length && data.stickers}
 	<Heading tag="h2">Results for "{data.word}"</Heading>
 
-	{#each data.res as result}
+	{#each data.stickers as result}
 		<hr class="my-4" />
 		<ul class="flex justify-center">
 			{#each result as sticker}

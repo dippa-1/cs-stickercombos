@@ -11,8 +11,13 @@ export const load: PageLoad = async ({ params }) => {
   const sticker: {
     name: string,
     iconUrl: string,
+    trait: string,
     rarity: string,
-    letters: string,
+    rarity_color: string,
+    text: {
+      letters: string,
+      rotation: number,
+    }[],
   } | null = await fetch(`http://localhost:5000/label/${params.name}`).then(res => res.json()).catch(e => error(500, e));
   console.log('Got labeling sticker', sticker);
 
