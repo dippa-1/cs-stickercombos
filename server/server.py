@@ -28,9 +28,12 @@ sticker_semaphore = threading.Semaphore()
 @app.route('/suggest/<word>', methods=['GET'])
 def get_suggestion(word):
   print(f'GET /suggest/{word}')
-  result_list = []
-  find_combinations(word, all_stickers)
-  return result_list
+  arr_3d = find_combinations(word, all_stickers)
+  arr_2d = []
+  for sub_array in arr_3d:
+    for inner_array in sub_array:
+      arr_2d.append(inner_array)
+  return arr_2d
 
 @app.route('/label/next', methods=['GET'])
 def get_next_label():

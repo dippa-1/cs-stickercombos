@@ -36,7 +36,13 @@ if __name__ == '__main__':
     with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
         stickerList = json.loads(f.read())
         word = "big dick"
+        arr_2d = []
         result = find_combinations(word.lower().replace(' ', ''), stickerList)
+        for sub_array in result:
+            for inner_array in sub_array:
+                arr_2d.append(inner_array)
+        with open('res.json', 'w') as f2:
+            json.dump(arr_2d, f2, indent=2)
         if result:
             for combination in result:
                 print(combination)
