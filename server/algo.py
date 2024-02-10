@@ -2,13 +2,13 @@ import json
 
 counter = 0
 
-def find_combinations(word, stickerList, prefix='', depth=0, stickerId=''):
+def find_combinations(word, stickerList, stickerId, prefix='', depth=0):
     global counter # Zugriff auf die globale Variable
 
     # Basisfall: Wenn das Präfix das gegebene Wort ergibt, geben Sie es aus
-    if word.lower() in prefix.lower():
+    if word == '':
         counter += 1
-        print('{}: {} | {} | {}'.format(counter, word, prefix, stickerId))
+        #print('{}: {}'.format(counter, stickerId))
         return
     
     # Basisfall: Wenn die maximale Tiefe erreicht ist, stoppen Sie die Rekursion
@@ -19,24 +19,44 @@ def find_combinations(word, stickerList, prefix='', depth=0, stickerId=''):
     for sticker in stickerList:
         # Extrahieren Sie die Buchstaben aus jedem Sticker-Text
         words = [x['letters'] for x in sticker['text']]
-        
+
         # Durchlaufen Sie die extrahierten Buchstaben für jeden Sticker
         for text in words:
+
             # Präfix + aktueller Sticker-Text
             new_prefix = prefix + text
             
-            # Wenn das neue Präfix ein Präfix des gegebenen Wortes ist,
-            # rufen Sie die Funktion rekursiv mit dem neuen Präfix auf
-            if new_prefix.lower().startswith(word.lower()):
-                find_combinations(word, stickerList, new_prefix, depth + 1, sticker['name'])
+            if word.lower().startswith(new_prefix.lower()):
+                i = 0
+                
+                for x in new_prefix.lower():
+                    if x == word[i]:
+                        i += 1
+                    else:
+                        break
+                
+                word = word[i:]
+                stickerId.append(sticker['name'])
+                return find_combinations(word, stickerList, stickerId, '', depth + 1)
+                
             
-            # Wenn der aktuelle Sticker-Text ein Teilstring des gegebenen Wortes ist,
-            # rufen Sie die Funktion rekursiv mit dem neuen Präfix auf
-            if new_prefix.lower() in word.lower():
-                find_combinations(word, stickerList, new_prefix, depth + 1, sticker['name'])
+            elif word.lower() in new_prefix.lower():
+                i = 0
+                
+                for x in new_prefix.lower():
+                    if i < len(word) and x == word[i]:
+                        i += 1
+                    else:
+                        break
+                
+                word = word[i:]
+                stickerId.append(sticker['name'])
+                return find_combinations(word, stickerList, stickerId, new_prefix, depth + 1)
 
 # Beispielaufruf
 with open('data/stickerAll2.json', 'r', encoding='UTF-8') as f:
   stickerList = json.loads(f.read())
-  word = "Good Evil"
-  find_combinations(word, stickerList)
+  word = "big dick".replace(' ', '')
+  stickerId = []
+  find_combinations(word, stickerList, stickerId)
+  print(stickerId)
