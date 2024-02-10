@@ -27,7 +27,6 @@ sticker_semaphore = threading.Semaphore()
 def find_combinations(word, stickerList, stickerId, prefix='', depth=0):
     # Basisfall: Wenn das Präfix das gegebene Wort ergibt, geben Sie es aus
     if word == '':
-        counter += 1
         #print('{}: {}'.format(counter, stickerId))
         return stickerId
     
